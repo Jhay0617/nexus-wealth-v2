@@ -4,7 +4,7 @@ export const useAssetSummary = (assets) => {
   return useMemo(() => {
     if (!assets) return {};
 
-    return assets.reduce((acc, cur) => {
+    const reduceAsset = assets.reduce((acc, cur) => {
       const { type, amount } = cur;
 
       if (!acc[type]) acc[type] = 0;
@@ -12,5 +12,9 @@ export const useAssetSummary = (assets) => {
 
       return acc;
     }, {});
+
+    const netWorth = Object.values(reduceAsset).reduce((a, b) => a + b, 0);
+
+    return { reduceAsset, netWorth };
   }, [assets]);
 };

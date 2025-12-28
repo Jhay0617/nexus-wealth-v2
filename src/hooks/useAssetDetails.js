@@ -7,7 +7,7 @@ export const useAssetDetails = () => {
   const { assets } = useAssetsData();
   const { id } = useParams();
 
-  const assetById = assets.find((info) => info.id === id);
+  const assetById = assets?.find((info) => info.id === id);
 
   const {
     data: transactions,

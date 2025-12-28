@@ -48,6 +48,7 @@ export function useCreateTransaction() {
     onSuccess: () => {
       toast.success("Transaction has been created");
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["assets"] });
     },
     onError: (error) => toast.error(error.message),
   });

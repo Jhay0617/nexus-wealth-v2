@@ -5,17 +5,18 @@ async function fetchProfileData() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
   if (!user) return null;
 
   const { data, error } = await supabase
     .from("profiles")
     .select("*")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
-  if (error)
-    throw new Error(error.message || "failed to fetch the profile`s data");
+  if (!data) {
+    console.log("No profile row found. Providing initial auth data.");
+    return { id: user.id, email: user.email, isNewUser: true };
+  }
 
   return data;
 }
